@@ -40,10 +40,14 @@ const Login = () => {
         <form onSubmit={handleLogin} className="space-y-4">
 
             <div>
-            <label className="block text-base font-medium text-gray-900 mb-1">Email</label>
+            <label htmlFor="email" className="block text-base font-medium text-gray-900 mb-1">Email</label>
     
             <input
+                id="email"
+                name="email"
                 type="email"
+                autoComplete="email"
+                placeholder="Enter your email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="w-full bg-gray-200 rounded-xl px-4 py-3 text-gray-900 outline-none focus:ring-2 focus:ring-blue-600 transition-all"
@@ -51,9 +55,13 @@ const Login = () => {
                />
             </div>
             <div >
-              <label className="block text-base font-medium text-gray-900 mb-1">Password</label>
+              <label htmlFor="password" className="block text-base font-medium text-gray-900 mb-1">Password</label>
             <div className="relative">
             <input
+                id="password"
+                name="password"
+                autoComplete="new-password"
+                placeholder="Enter your password"
                 type={showPassword ? "text" : "password"}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -98,7 +106,7 @@ const Login = () => {
         </div>
         {/* the signup link */}
         <p className="text-center text-sm text-gray-600 ">
-          Dont have an account?{' '}
+          Don't have an account?{' '}
           <Link to="/register" className="text-blue-600 font-medium hover:underline pl-2">
             Sign up as new user
           </Link>

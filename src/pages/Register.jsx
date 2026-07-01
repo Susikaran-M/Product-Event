@@ -10,12 +10,18 @@ const Register = () => {
     const [role, setRole] = useState('PARTICIPANT') 
     const [confirmPassword, setConfirmPassword] = useState('')
     const [showPassword, setShowPassword] = useState(false);
+    const [error, setError] = useState('');
     const handleRegister = async (e) => {
     e.preventDefault();
+    setError('');
+
+    if (password !== confirmPassword) {
+      return setError('Passwords do not match. Please try again.');
+    }
     try {
       alert('Registration successful! You can now log in.');
     } catch (error) {
-      console.error('Login failed:', error);
+      setError('Registration failed. Please try again.');
     }
   };
 
@@ -36,10 +42,16 @@ const Register = () => {
                  <h1 className="text-2xl font-semibold text-gray-900 mt-2">Create your 
                    account</h1>
                </div>
+               {/* password match validation */}
+               {error && (
+          <div className="bg-red-50 text-red-600 px-4 py-3 rounded-xl text-sm font-medium border border-red-100 text-center">
+            {error}
+          </div>
+        )}
                 {/* the register form */}
                 <form onSubmit={handleRegister} className="space-y-4">  
-           <div>
-                <label className="block text-sm font-medium text-gray-900 mb-2">Account Type</label>
+           <div aria-labelledby="role-group-label">
+                <label id="role-group-label" className="block text-sm font-medium text-gray-900 mb-2">Account Type</label>
             <div className="grid grid-cols-2 gap-4">
 
               <button
@@ -62,9 +74,13 @@ const Register = () => {
               </div>
                     
             <div>
-            <label className="block text-base font-medium text-gray-900 mb-1">Full Name</label>
+            <label htmlFor="name" className="block text-base font-medium text-gray-900 mb-1">Full Name</label>
     
             <input
+                id="name"
+                name="name"
+                autoComplete="name"
+                placeholder="Enter your full name"
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
@@ -74,9 +90,13 @@ const Register = () => {
             </div>
             
             <div>
-            <label className="block text-base font-medium text-gray-900 mb-1">Phone</label>
+            <label htmlFor="contact" className="block text-base font-medium text-gray-900 mb-1">Phone</label>
     
             <input
+              id="contact"
+              name="contact"
+              autoComplete="tel"
+              placeholder="Enter 10-digit phone number"
                 type="tel"
                 value={contact}
                 pattern="[0-9]{10}"
@@ -87,9 +107,13 @@ const Register = () => {
             </div>
 
               <div>
-            <label className="block text-base font-medium text-gray-900 mb-1">Email</label>
+            <label htmlFor="email" className="block text-base font-medium text-gray-900 mb-1">Email</label>
     
             <input
+                id="email"
+                name="email"
+                autoComplete="email"
+                placeholder="Enter your email"
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -98,9 +122,13 @@ const Register = () => {
                />
             </div>
                   <div>
-            <label className="block text-base font-medium text-gray-900 mb-1">Password</label>
+            <label htmlFor="password" className="block text-base font-medium text-gray-900 mb-1">Password</label>
             
             <input
+                id="password"
+                name="password"
+                autoComplete="new-password"
+                placeholder="Enter your password"
                 type={showPassword ? "text" : "password"}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -111,10 +139,13 @@ const Register = () => {
             </div>
 
               <div>
-            <label className="block text-base font-medium text-gray-900 mb-1">Confirm Password
+            <label htmlFor="confirmPassword" className="block text-base font-medium text-gray-900 mb-1">Confirm Password
             </label>
             <div className="relative">
             <input
+                id="confirmPassword"
+                name="confirmPassword"
+                placeholder="Confirm password"
                 type={showPassword ? "text" : "password"}
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
