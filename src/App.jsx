@@ -1,5 +1,6 @@
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
 import { AuthProvider } from './contexts/AuthContext';
+
 import Login from './pages/Login';
 import Register from './pages/Register';
 const App = () => {
