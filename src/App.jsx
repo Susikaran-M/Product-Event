@@ -1,10 +1,10 @@
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
 import { AuthProvider } from './contexts/AuthContext';
-
+import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
 const App = () => {
-    const Home = () => <div className="p-10 text-2xl font-bold text-blue-500">Home Page (Public Marketplace)</div>;
+ 
 
 const Events = () => <div className="p-10 text-2xl font-bold">Event Details Page</div>;
 const Dashboard = () => <div className="p-10 text-2xl font-bold text-green-600">Organizer Dashboard</div>;
