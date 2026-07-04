@@ -13,8 +13,8 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      await login('Organizer'); // Assuming the user is an organizer for this example
-      navigate('/dashboard');
+      await login('ORGANIZER'); // Assuming the user is an organizer for this example
+      navigate('/');
     } catch (error) {
       console.error('Login failed:', error);
     }

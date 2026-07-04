@@ -1,11 +1,13 @@
 import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { FiSearch ,FiChevronDown ,FiFilter } from 'react-icons/fi';
-
+import {useState} from 'react'
+import FilterSidebar from './FilterSidebar';
 const Navbar = () => {
 
+    const[isFilterOpen,setIsFilterOpen] = useState(false);
     const { isAuthenticated, role } = useAuth();
-
+    
     return(
     
     <nav className="flex flex-col lg:flex-row lg:justify-around items-center px-8 py-4 bg-white border-b border-gray-100 sticky top-0 z-50 shadow-sm gap-4">
@@ -16,7 +18,13 @@ const Navbar = () => {
         View Your Event
       </Link>
       {/* only visible on mobile */}
-      <div className="lg:hidden items-center gap-4">
+      <div className="lg:hidden flex items-center gap-4">
+          {/* the dynamic organize button */}
+        {isAuthenticated && role === 'ORGANIZER' && (
+          <Link to="/create-event" className="text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors">
+            Organize
+          </Link>
+        )}
         {isAuthenticated ? (
              <button className="text-sm font-medium text-gray-700">Profile</button>
           ) : (
@@ -25,17 +33,19 @@ const Navbar = () => {
           </div>
       </div>
       {/* for mobile second row and for desktop single row */}
-      <div className="flex  flex-col lg:flex-row w-full lg:flex-1 lg:justify-center items-center gap-3 lg:gap-4 lg:px-6 hide-scrollbar">
+      <div className="flex  flex-col lg:flex-row w-full lg:flex-1 items-center gap-3 lg:gap-4 lg:px-6 hide-scrollbar">
 
       
-          <div className="flex items-center gap-2 w-full mg:w-auto">
+          <div className="flex items-center gap-2 w-full">
         {/* location */}
           <button className=" flex-1 md:flex-none flex justify-center items-center gap-2 bg-gray-50 border border-gray-200 px-3 py-2.5 rounded-xl text-sm font-medium text-gray-700 hover:bg-gray-100 transition-colors">
           Select Location <FiChevronDown />
         </button>
         
         {/* filter */}
-        <button className="flex-1 md:flex-none flex justify-center items-center gap-2 bg-gray-50 border border-gray-200 px-5 py-2.5 rounded-xl text-sm font-medium text-gray-700 hover:bg-gray-100 transition-colors">
+        <button
+        onClick={() => setIsFilterOpen(true)}
+        className="flex-1 md:flex-none flex justify-center items-center gap-2 bg-gray-50 border border-gray-200 px-5 py-2.5 rounded-xl text-sm font-medium text-gray-700 hover:bg-gray-100 transition-colors">
           <FiFilter /> Filters
         </button>
           </div>
@@ -64,7 +74,7 @@ const Navbar = () => {
         )}
         {/* the dynamic profile,sign in button */}
         {isAuthenticated ? (
-           <button className="flex items-center gap-2 border border-gray-200 rounded-full px-5 py-2 hover:bg-gray-50 transition-all">
+           <button className="flex items-center gap-2 border border-gray-200 rounded-full px-5 py-2 hover:bg-gray-100 transition-all">
              <span className="text-sm font-medium text-gray-700">Profile</span>
            </button>
         ) : (
@@ -73,7 +83,12 @@ const Navbar = () => {
           </Link>
         )}
       </div>
+      <FilterSidebar 
+        isOpen={isFilterOpen} 
+        onClose={() => setIsFilterOpen(false)} 
+      />
     </nav>
+    
     )
 
 }
