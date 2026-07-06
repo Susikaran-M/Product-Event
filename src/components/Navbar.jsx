@@ -1,13 +1,38 @@
 import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { FiSearch ,FiChevronDown ,FiFilter } from 'react-icons/fi';
-import {useState} from 'react'
+import {useState ,useEffect ,useRef} from 'react'
 import FilterSidebar from './FilterSidebar';
 const Navbar = () => {
 
     const[isFilterOpen,setIsFilterOpen] = useState(false);
     const { isAuthenticated, role } = useAuth();
-    
+    // Location Dropdown State
+  const [isLocationOpen, setIsLocationOpen] = useState(false);
+  const [selectedLocation, setSelectedLocation] = useState('Select Location');
+
+  const locationRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      //here the locationRef.current is used to check if the dropdown is on
+      //the screen to avoid the crash of the app when the dropdown is not on 
+      // the screen and user clicks outside the dropdown
+
+      //if dropdown is open and click is outside the dropdown, close it
+      if (isLocationOpen && locationRef.current && !locationRef.current.contains(event.target)) {
+        setIsLocationOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener('touchstart', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('touchstart', handleClickOutside);
+    };
+  }, [isLocationOpen]);
+
     return(
     
     <nav className="flex flex-col lg:flex-row lg:justify-around items-center px-8 py-4 bg-white border-b border-gray-100 sticky top-0 z-50 shadow-sm gap-4">
@@ -38,9 +63,34 @@ const Navbar = () => {
       
           <div className="flex items-center gap-2 w-full">
         {/* location */}
-          <button className=" flex-1 md:flex-none flex justify-center items-center gap-2 bg-gray-50 border border-gray-200 px-3 py-2.5 rounded-xl text-sm font-medium text-gray-700 hover:bg-gray-100 transition-colors">
-          Select Location <FiChevronDown />
+        <div ref={locationRef} className="relative w-full lg:w-auto">
+          <button
+          onClick={() => setIsLocationOpen(!isLocationOpen)}
+          className=" w-full flex-1 lg:flex-none flex justify-center items-center gap-2 bg-gray-50 border border-gray-200 px-3 py-2.5 rounded-xl text-sm font-medium text-gray-700 hover:bg-gray-100 transition-colors">
+            {/* Display the selected state, and animate the arrow! */}
+            <span className="truncate max-w-[120px]">{selectedLocation}</span>
+          <FiChevronDown className={`transition-transform duration-200 ${isLocationOpen ? 'rotate-180' : ''}`} />
         </button>
+
+        {isLocationOpen && (
+          <div className="absolute top-full left-0 mt-2 w-full lg:w-56 bg-white border border-gray-100 rounded-xl shadow-lg py-2 z-[80]">
+          <div className="max-h-60 overflow-y-auto hide-scrollbar">
+                {['Tamil Nadu', 'Karnataka', 'Maharashtra', 'Delhi', 'Telangana', 'Kerala', 'Gujarat', 'West Bengal'].map((state) => (
+                  <button
+                    key={state}
+                    onClick={() => {
+                      setSelectedLocation(state);
+                      setIsLocationOpen(false); // Close after picking
+                    }}
+          className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 transition-colors"
+                  >
+                    {state}
+                  </button>
+        ))}
+          </div>
+        </div>
+        )}
+        </div>
         
         {/* filter */}
         <button
