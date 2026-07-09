@@ -11,6 +11,8 @@ const Navbar = () => {
   const [isLocationOpen, setIsLocationOpen] = useState(false);
   const [selectedLocation, setSelectedLocation] = useState('Select Location');
 
+  const[locationSearch,setLocationSearch] = useState('');
+
   const locationRef = useRef(null);
 
   useEffect(() => {
@@ -74,19 +76,40 @@ const Navbar = () => {
 
         {isLocationOpen && (
           <div className="absolute top-full left-0 mt-2 w-full lg:w-56 bg-white border border-gray-100 rounded-xl shadow-lg py-2 z-[80]">
+          
+          {/* The new search bar */}
+          <div className= "p-2 border-b border-gray-100 bg-white sticky top-0"> 
+          <input
+            type="text"
+            placeholder="Search state..."
+            value={locationSearch}
+            onChange={(e) => setLocationSearch(e.target.value)}
+            className="w-full border bg-50 border-gray-200 rounded-lg px-3 py-2 text-sm text-gray-700 outline-none focus:border-indigo-500 transition-colors"
+            autoFocus
+            ></input>
+
+            </div>       
+             {/*the list of states  */}
           <div className="max-h-60 overflow-y-auto hide-scrollbar">
-                {['Tamil Nadu', 'Karnataka', 'Maharashtra', 'Delhi', 'Telangana', 'Kerala', 'Gujarat', 'West Bengal'].map((state) => (
+                {['Tamil Nadu', 'Karnataka', 'Maharashtra', 'Delhi', 'Telangana', 'Kerala', 'Gujarat', 'West Bengal'].
+                filter((state) => state.toLowerCase().includes(locationSearch.toLowerCase()))
+                .map((state) => (
                   <button
                     key={state}
                     onClick={() => {
                       setSelectedLocation(state);
                       setIsLocationOpen(false); // Close after picking
+                      setLocationSearch('');
                     }}
           className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 transition-colors"
                   >
                     {state}
                   </button>
         ))}
+        {/* fallback if no states match */}
+        {['Tamil Nadu', 'Karnataka', 'Maharashtra', 'Delhi', 'Telangana', 'Kerala', 'Gujarat', 'West Bengal'].filter((state) => state.toLowerCase().includes(locationSearch.toLowerCase())).length === 0 && (
+          <div className="px-4 py-3 text-sm text-gray-500 text-center">No states found</div>
+        )}
           </div>
         </div>
         )}
