@@ -2,6 +2,7 @@ import Navbar from "../components/Navbar";
 import EventCard from "../components/EventCard";
 import { useSearchParams } from "react-router-dom";
 import { Music, Trophy, Briefcase } from 'lucide-react';
+import HeroCarousel from "../components/HeroCarousel";
 const Home = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const activeCategory = searchParams.get('category') || 'all';
@@ -57,6 +58,7 @@ const Home = () => {
   <div className="min-h-screen bg-gray-50">
     <Navbar />
     <main className="max-w-7xl mx-auto px-4 lg:px-8 py-8 lg:py-12">
+      <HeroCarousel />
       {/* Explore Events */}
       <div className="mb-8 lg:mb-12">
         <h2 className="text-sm font-medium text-gray-500 mb-4">Explore Yours</h2>

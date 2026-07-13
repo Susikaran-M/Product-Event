@@ -48,7 +48,7 @@ const Navbar = () => {
       <div className="lg:hidden flex items-center gap-4">
           {/* the dynamic organize button */}
         {isAuthenticated && role === 'ORGANIZER' && (
-          <Link to="/create-event" className="text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors">
+          <Link to="/CreateEvent" className="text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors">
             Organize
           </Link>
         )}
@@ -141,7 +141,7 @@ const Navbar = () => {
       <div className="hidden lg:flex items-center gap-6">
          {/* the dynamic organize button */}
         {isAuthenticated && role === 'ORGANIZER' && (
-          <Link to="/create-event" className="text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors">
+          <Link to="/CreateEvent" className="text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors">
             Organize
           </Link>
         )}
