@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { FiSearch ,FiChevronDown ,FiFilter } from 'react-icons/fi';
 import {useState ,useEffect ,useRef} from 'react'
+import CreateEvent from '../pages/CreateEvent';
 import FilterSidebar from './FilterSidebar';
 const Navbar = () => {
 
