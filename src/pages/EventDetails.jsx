@@ -1,4 +1,5 @@
-import {Share2} from 'lucide-react';
+import {Share2 ,Calendar ,Clock ,MapPin ,Hourglass ,User ,Phone ,Mail} from 'lucide-react';
+import Navbar from '../components/Navbar';
 const eventData = {
   id: "EVT-001",
   title: "Tech Summit 2025",
@@ -43,6 +44,7 @@ const eventData = {
 const EventDetails = () => {
     return (
       <div className="bg-gray-50 pb-12font-sans text-gray-900">
+        <Navbar />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Page Header */}
           <div className="flex justify-between items-start mb-6">
@@ -50,7 +52,7 @@ const EventDetails = () => {
               <h1 className="text-3xl font-bold text-gray-900 mb-1">{eventData.title}</h1>
               <p className="text-gray-500 text-sm">{eventData.id}</p>
              </div>
-             <button className="p-2.5 bg-white border border-gray-200 rounded-full text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-colors shadow-sm">
+             <button className="p-2.5 mt-3 bg-white border border-gray-200 rounded-full text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-colors shadow-sm">
               <Share2 size={20} />
              </button>
             </div>
@@ -85,6 +87,83 @@ const EventDetails = () => {
                   <p className="text-gray-600 text-base leading-relaxed">
                     {eventData.about}
                   </p>
+                </div>
+                {/* Sub Events */}
+                <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
+                  <h2 className="text-lg font-semibold mb-4">Sub Events</h2>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    {eventData.subEvents.map((sub) => (
+                  <div key={sub.id} className="border border-gray-100 rounded-xl overflow-hidden flex flex-col shadow-sm">
+                    <div className="h-40 w-full overflow-hidden">
+                      <img src={sub.image} alt={sub.title} className="w-full h-full object-cover" />
+                    </div>
+                    <div className="p-4 flex flex-col flex-grow bg-white">
+                      <h3 className="font-medium text-gray-900 mb-4">{sub.title}</h3>
+                      <button className="mt-auto w-full py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition-colors">
+                        See More
+                      </button>
+                    </div>
+                  </div>
+                ))}
+                  </div>
+                </div>
+              </div>
+              {/* RIGHT COLUMN: Sticky Sidebar (Spans 1 column on Desktop) */}
+              <div className="lg:col-span-1">
+                <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm sticky top-24">
+                  {/* Event Details List */}
+              <h2 className="text-lg font-semibold mb-5">Event Details</h2>
+              <div className="space-y-5">
+                <div className="flex gap-4 items-start">
+                  <Calendar className="text-blue-600 shrink-0" size={20} />
+                  <div>
+                    <p className="text-xs text-gray-500 font-medium mb-0.5">Date</p>
+                    <p className="text-sm font-medium text-gray-900">{eventData.date}</p>
+                  </div>
+                  </div>
+                <div className="flex gap-4 items-start">
+                  <Clock className="text-blue-600 shrink-0" size={20} />
+                  <div>
+                    <p className="text-xs text-gray-500 font-medium mb-0.5">Time</p>
+                    <p className="text-sm font-medium text-gray-900">{eventData.time}</p>
+                  </div>
+                </div>
+                <div className="flex gap-4 items-start">
+                  <MapPin className="text-blue-600 shrink-0" size={20} />
+                  <div>
+                    <p className="text-xs text-gray-500 font-medium mb-0.5">Location</p>
+                    <p className="text-sm font-medium text-gray-900 leading-tight">{eventData.location}</p>
+                  </div>
+                </div>
+                <div className="flex gap-4 items-start">
+                  <Hourglass className="text-blue-600 shrink-0" size={20} />
+                  <div>
+                    <p className="text-xs text-gray-500 font-medium mb-0.5">Duration</p>
+                    <p className="text-sm font-medium text-gray-900">{eventData.duration}</p>
+                  </div>
+                </div>
+              </div>
+              <div className="h-px bg-gray-100 w-full my-6"></div>
+              {/* Organizer Details */}
+              <h2 className="text-sm font-semibold mb-4 text-gray-800">Organizer</h2>
+              <div className="space-y-4 mb-8">
+                <div className="flex items-center gap-3">
+                  <User className="text-gray-400 shrink-0" size={18} />
+                  <p className="text-sm text-gray-700">{eventData.organizer.name}</p>
+                </div>
+                <div className="flex items-center gap-3">
+                  <Phone className="text-gray-400 shrink-0" size={18} />
+                  <p className="text-sm text-gray-700">{eventData.organizer.phone}</p>
+                </div>
+                <div className="flex items-center gap-3">
+                  <Mail className="text-gray-400 shrink-0" size={18} />
+                  <p className="text-sm text-gray-700">{eventData.organizer.email}</p>
+                  </div>
+              </div>
+              {/* Action Button */}
+              <button className="w-full py-3.5 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-xl transition-colors shadow-sm text-center">
+                Register Now
+              </button>
                 </div>
               </div>
               </div>
